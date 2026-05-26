@@ -24,3 +24,18 @@ if hist_button2:
     fig = px.scatter(car_data, x="odometer", y="price") # crear un gráfico
     
     st.plotly_chart(fig, use_container_width=True)
+#Actividad adicional: crear una casillas de verificación
+build_histogram = st.checkbox('Construir un histograma')
+build_histogram2 = st.checkbox('Construir un gráfico de dispersión')
+if build_histogram:
+    st.write('Creación de un histograma para el conjunto de datos de anuncios de venta de coches')
+    
+    fig = px.histogram(car_data, x="odometer") # crear un histograma
+    
+    st.plotly_chart(fig, use_container_width=True)
+if build_histogram2:
+    st.write('Creacion de un gráfico de dispersión para el conjunto de datos de anuncios de venta de coches')
+    
+    fig = px.scatter(car_data, x="odometer", y="price") # crear un gráfico
+    
+    st.plotly_chart(fig, use_container_width=True)
