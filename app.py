@@ -1,53 +1,18 @@
 import pandas as pd
-import scipy.stats
 import streamlit as st
-import time
 import  plotly.express as px
 
-# estas son variables de estado que se conservan cuando Streamlin vuelve a ejecutar este script
-if 'experiment_no' not in st.session_state:
-    st.session_state['experiment_no'] = 0
+st.header('Creación de un histograma para el conjunto de datos de anuncios de venta de coches')
 
-if 'df_experiment_results' not in st.session_state:
-    st.session_state['df_experiment_results'] = pd.DataFrame(columns=['no', 'iteraciones', 'media'])
-
-st.header('Lanzar una moneda')
-
-chart = st.line_chart([0.5])
-
-def toss_coin(n):
-
-    trial_outcomes = scipy.stats.bernoulli.rvs(p=0.5, size=n)
-
-    mean = None
-    outcome_no = 0
-    outcome_1_count = 0
-
-    for r in trial_outcomes:
-        outcome_no +=1
-        if r == 1:
-            outcome_1_count += 1
-        mean = outcome_1_count / outcome_no
-        chart.add_rows([mean])
-        time.sleep(0.05)
-
-    return mean
-
-number_of_trials = st.slider('¿Número de intentos?', 1, 1000, 10)
-start_button = st.button('Ejecutar')
-
-if start_button:
-    st.write(f'Experimento con {number_of_trials} intentos en curso.')
-    st.session_state['experiment_no'] += 1
-    mean = toss_coin(number_of_trials)
-    st.session_state['df_experiment_results'] = pd.concat([
-        st.session_state['df_experiment_results'],
-        pd.DataFrame(data=[[st.session_state['experiment_no'],
-                            number_of_trials,
-                            mean]],
-                     columns=['no', 'iteraciones', 'media'])
-        ],
-        axis=0)
-    st.session_state['df_experiment_results'] = st.session_state['df_experiment_results'].reset_index(drop=True)
-
-st.write(st.session_state['df_experiment_results'])
+car_data = pd.read_csv(r'C:\Users\Denisse\Desktop\Damian\practicas\app_lanzar_moneda\stream_lit_test\vehicles_us.csv') # leer los datos
+hist_button = st.button('Construir histograma') # crear un botón
+     
+if hist_button: # al hacer clic en el botón
+         # escribir un mensaje
+         st.write('Creación de un histograma para el conjunto de datos de anuncios de venta de coches')
+         
+         # crear un histograma
+         fig = px.histogram(car_data, x="odometer")
+     
+         # mostrar un gráfico Plotly interactivo
+         st.plotly_chart(fig, use_container_width=True)
