@@ -4,7 +4,7 @@ import  plotly.express as px
 
 st.header('Creación de un histograma para el conjunto de datos de anuncios de venta de coches')
 
-car_data = pd.read_csv(r'C:\Users\Denisse\Desktop\Damian\practicas\app_lanzar_moneda\stream_lit_test\vehicles_us.csv') # leer los datos
+car_data = pd.read_csv('vehicles_us.csv') # leer los datos
 #creacion de botones para mostrar los graficos
 hist_button = st.button('Construir histograma')
 hist_button2 = st.button('Construir gráfico de dispersión')
